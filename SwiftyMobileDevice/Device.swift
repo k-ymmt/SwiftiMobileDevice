@@ -1,0 +1,101 @@
+//
+//  Device.swift
+//  SwiftyMobileDevice
+//
+//  Created by Kazuki Yamamoto on 2019/12/25.
+//  Copyright © 2019 Kazuki Yamamoto. All rights reserved.
+//
+
+import Foundation
+import MobileDevice
+
+public struct DeviceLookupOptions: OptionSet {
+    public static let usbmux = DeviceLookupOptions(rawValue: 1 << 1)
+    public static let network = DeviceLookupOptions(rawValue: 1 << 2)
+    public static let preferNetwork = DeviceLookupOptions(rawValue: 1 << 3)
+    
+    public let rawValue: UInt32
+    
+    public init(rawValue: UInt32) {
+        self.rawValue = rawValue
+    }
+}
+
+public struct Device {
+    var rawValue: idevice_t? = nil
+    
+    public init(udid: String) throws {
+        try udid.withCString { (p) in
+            var device: idevice_t? = nil
+            let rawError = idevice_new(&device, p)
+            if let error = MobileDeviceError(rawValue: rawError.rawValue) {
+                throw error
+            }
+            self.rawValue = device
+        }
+    }
+    
+    public init(udid: String, options: DeviceLookupOptions) throws {
+        try udid.withCString({ (p) in
+            let rawError = idevice_new_with_options(&rawValue, p, .init(options.rawValue))
+            if let error = MobileDeviceError(rawValue: rawError.rawValue) {
+                throw error
+            }
+        })
+    }
+    
+    public mutating func connect<T>(port: UInt, body: (DeviceConnection) throws -> T) throws -> T {
+        guard let device = self.rawValue else {
+            throw MobileDeviceError.deallocatedDevice
+        }
+        var pconnection: idevice_connection_t? = nil
+        let rawError = idevice_connect(device, UInt16(port), &pconnection)
+        if let error = MobileDeviceError(rawValue: rawError.rawValue) {
+            throw error
+        }
+        guard let connection = pconnection else {
+            throw MobileDeviceError.unknown
+        }
+        var conn = DeviceConnection(rawValue: connection)
+        defer { conn.free() }
+        return try body(conn)
+    }
+    
+    public func getHandle() throws -> UInt32 {
+        guard let rawValue = self.rawValue else {
+            throw MobileDeviceError.disconnected
+        }
+        var handle: UInt32 = 0
+        let rawError = idevice_get_handle(rawValue, &handle)
+        
+        if let error = MobileDeviceError(rawValue: rawError.rawValue) {
+            throw error
+        }
+        
+        return handle
+    }
+    
+    public func getUDID() throws -> String {
+        guard let rawValue = self.rawValue else {
+            throw MobileDeviceError.disconnected
+        }
+        var pudid: UnsafeMutablePointer<Int8>? = nil
+        let rawError = idevice_get_udid(rawValue, &pudid)
+        if let error = MobileDeviceError(rawValue: rawError.rawValue) {
+            throw error
+        }
+        
+        guard let udid = pudid else {
+            throw MobileDeviceError.unknown
+        }
+        defer { udid.deallocate() }
+        return String(cString: udid)
+    }
+    
+    public mutating func free() {
+        if let rawValue = self.rawValue {
+            idevice_free(rawValue)
+            self.rawValue = nil
+        }
+    }
+}

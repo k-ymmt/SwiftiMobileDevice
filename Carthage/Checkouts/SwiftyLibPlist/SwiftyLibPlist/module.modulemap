@@ -1,0 +1,5 @@
+module libplist {
+    header "libplist.h"
+    export *
+}
+
