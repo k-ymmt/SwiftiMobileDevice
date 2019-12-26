@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02BF5D8F23B38CC80001BB45 /* SwiftyMobileDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5D8523B38CC80001BB45 /* SwiftyMobileDevice.framework */; };
-		02BF5D9423B38CC80001BB45 /* SwiftyMobileDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5D9323B38CC80001BB45 /* SwiftyMobileDeviceTests.swift */; };
-		02BF5D9623B38CC80001BB45 /* SwiftyMobileDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 02BF5D8823B38CC80001BB45 /* SwiftyMobileDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0266FC8523B47E16005D2408 /* SwiftyLibPlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */; };
+		0266FC8623B47E16005D2408 /* SwiftyLibPlist.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		02BF5D8F23B38CC80001BB45 /* SwiftiMobileDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5D8523B38CC80001BB45 /* SwiftiMobileDevice.framework */; };
+		02BF5D9423B38CC80001BB45 /* SwiftiMobileDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5D9323B38CC80001BB45 /* SwiftiMobileDeviceTests.swift */; };
+		02BF5D9623B38CC80001BB45 /* SwiftiMobileDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 02BF5D8823B38CC80001BB45 /* SwiftiMobileDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		02BF5DA223B38FC20001BB45 /* libimobiledevice.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5DA123B38FC20001BB45 /* libimobiledevice.6.dylib */; };
 		02BF5DA323B38FC20001BB45 /* libimobiledevice.6.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 02BF5DA123B38FC20001BB45 /* libimobiledevice.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		02BF5DA623B3909F0001BB45 /* MobileDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5DA523B3909F0001BB45 /* MobileDevice.swift */; };
@@ -23,8 +25,6 @@
 		02BF5DB823B392AE0001BB45 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5DB723B392AE0001BB45 /* Device.swift */; };
 		02BF5DBA23B392C60001BB45 /* DebugServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5DB923B392C60001BB45 /* DebugServer.swift */; };
 		02BF5DBC23B392ED0001BB45 /* AppleServiceIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5DBB23B392ED0001BB45 /* AppleServiceIdentifier.swift */; };
-		02BF5DBE23B39F440001BB45 /* SwiftyLibPlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */; };
-		02BF5DBF23B39F440001BB45 /* SwiftyLibPlist.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02BF5DC323B3B5570001BB45 /* libplist.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5DC023B3B4690001BB45 /* libplist.3.dylib */; };
 /* End PBXBuildFile section */
 
@@ -34,7 +34,7 @@
 			containerPortal = 02BF5D7C23B38CC80001BB45 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 02BF5D8423B38CC80001BB45;
-			remoteInfo = SwiftyMobileDevice;
+			remoteInfo = SwiftiMobileDevice;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -46,7 +46,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				02BF5DA323B38FC20001BB45 /* libimobiledevice.6.dylib in Embed Libraries */,
-				02BF5DBF23B39F440001BB45 /* SwiftyLibPlist.framework in Embed Libraries */,
+				0266FC8623B47E16005D2408 /* SwiftyLibPlist.framework in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,11 +54,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		02BF5D8523B38CC80001BB45 /* SwiftyMobileDevice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyMobileDevice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		02BF5D8823B38CC80001BB45 /* SwiftyMobileDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyMobileDevice.h; sourceTree = "<group>"; };
+		02BF5D8523B38CC80001BB45 /* SwiftiMobileDevice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftiMobileDevice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		02BF5D8823B38CC80001BB45 /* SwiftiMobileDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftiMobileDevice.h; sourceTree = "<group>"; };
 		02BF5D8923B38CC80001BB45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		02BF5D8E23B38CC80001BB45 /* SwiftyMobileDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyMobileDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		02BF5D9323B38CC80001BB45 /* SwiftyMobileDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyMobileDeviceTests.swift; sourceTree = "<group>"; };
+		02BF5D8E23B38CC80001BB45 /* SwiftiMobileDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftiMobileDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		02BF5D9323B38CC80001BB45 /* SwiftiMobileDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftiMobileDeviceTests.swift; sourceTree = "<group>"; };
 		02BF5D9523B38CC80001BB45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02BF5DA123B38FC20001BB45 /* libimobiledevice.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libimobiledevice.6.dylib; path = libimobiledevice/src/.libs/libimobiledevice.6.dylib; sourceTree = "<group>"; };
 		02BF5DA523B3909F0001BB45 /* MobileDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileDevice.swift; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02BF5DA223B38FC20001BB45 /* libimobiledevice.6.dylib in Frameworks */,
-				02BF5DBE23B39F440001BB45 /* SwiftyLibPlist.framework in Frameworks */,
+				0266FC8523B47E16005D2408 /* SwiftyLibPlist.framework in Frameworks */,
 				02BF5DC323B3B5570001BB45 /* libplist.3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,7 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02BF5D8F23B38CC80001BB45 /* SwiftyMobileDevice.framework in Frameworks */,
+				02BF5D8F23B38CC80001BB45 /* SwiftiMobileDevice.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,8 +103,8 @@
 		02BF5D7B23B38CC80001BB45 = {
 			isa = PBXGroup;
 			children = (
-				02BF5D8723B38CC80001BB45 /* SwiftyMobileDevice */,
-				02BF5D9223B38CC80001BB45 /* SwiftyMobileDeviceTests */,
+				02BF5D8723B38CC80001BB45 /* SwiftiMobileDevice */,
+				02BF5D9223B38CC80001BB45 /* SwiftiMobileDeviceTests */,
 				02BF5D8623B38CC80001BB45 /* Products */,
 				02BF5DA023B38FC20001BB45 /* Frameworks */,
 			);
@@ -113,13 +113,13 @@
 		02BF5D8623B38CC80001BB45 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				02BF5D8523B38CC80001BB45 /* SwiftyMobileDevice.framework */,
-				02BF5D8E23B38CC80001BB45 /* SwiftyMobileDeviceTests.xctest */,
+				02BF5D8523B38CC80001BB45 /* SwiftiMobileDevice.framework */,
+				02BF5D8E23B38CC80001BB45 /* SwiftiMobileDeviceTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		02BF5D8723B38CC80001BB45 /* SwiftyMobileDevice */ = {
+		02BF5D8723B38CC80001BB45 /* SwiftiMobileDevice */ = {
 			isa = PBXGroup;
 			children = (
 				02BF5DA523B3909F0001BB45 /* MobileDevice.swift */,
@@ -136,18 +136,18 @@
 				02BF5DA823B390E00001BB45 /* imobiledevice.h */,
 				02BF5DA723B390B50001BB45 /* module.modulemap */,
 				02BF5D8923B38CC80001BB45 /* Info.plist */,
-				02BF5D8823B38CC80001BB45 /* SwiftyMobileDevice.h */,
+				02BF5D8823B38CC80001BB45 /* SwiftiMobileDevice.h */,
 			);
-			path = SwiftyMobileDevice;
+			path = SwiftiMobileDevice;
 			sourceTree = "<group>";
 		};
-		02BF5D9223B38CC80001BB45 /* SwiftyMobileDeviceTests */ = {
+		02BF5D9223B38CC80001BB45 /* SwiftiMobileDeviceTests */ = {
 			isa = PBXGroup;
 			children = (
-				02BF5D9323B38CC80001BB45 /* SwiftyMobileDeviceTests.swift */,
+				02BF5D9323B38CC80001BB45 /* SwiftiMobileDeviceTests.swift */,
 				02BF5D9523B38CC80001BB45 /* Info.plist */,
 			);
-			path = SwiftyMobileDeviceTests;
+			path = SwiftiMobileDeviceTests;
 			sourceTree = "<group>";
 		};
 		02BF5DA023B38FC20001BB45 /* Frameworks */ = {
@@ -167,16 +167,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02BF5D9623B38CC80001BB45 /* SwiftyMobileDevice.h in Headers */,
+				02BF5D9623B38CC80001BB45 /* SwiftiMobileDevice.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		02BF5D8423B38CC80001BB45 /* SwiftyMobileDevice */ = {
+		02BF5D8423B38CC80001BB45 /* SwiftiMobileDevice */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 02BF5D9923B38CC80001BB45 /* Build configuration list for PBXNativeTarget "SwiftyMobileDevice" */;
+			buildConfigurationList = 02BF5D9923B38CC80001BB45 /* Build configuration list for PBXNativeTarget "SwiftiMobileDevice" */;
 			buildPhases = (
 				02BF5D9F23B38DC40001BB45 /* Make libimobiledevice */,
 				02BF5D8023B38CC80001BB45 /* Headers */,
@@ -189,14 +189,14 @@
 			);
 			dependencies = (
 			);
-			name = SwiftyMobileDevice;
-			productName = SwiftyMobileDevice;
-			productReference = 02BF5D8523B38CC80001BB45 /* SwiftyMobileDevice.framework */;
+			name = SwiftiMobileDevice;
+			productName = SwiftiMobileDevice;
+			productReference = 02BF5D8523B38CC80001BB45 /* SwiftiMobileDevice.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		02BF5D8D23B38CC80001BB45 /* SwiftyMobileDeviceTests */ = {
+		02BF5D8D23B38CC80001BB45 /* SwiftiMobileDeviceTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 02BF5D9C23B38CC80001BB45 /* Build configuration list for PBXNativeTarget "SwiftyMobileDeviceTests" */;
+			buildConfigurationList = 02BF5D9C23B38CC80001BB45 /* Build configuration list for PBXNativeTarget "SwiftiMobileDeviceTests" */;
 			buildPhases = (
 				02BF5D8A23B38CC80001BB45 /* Sources */,
 				02BF5D8B23B38CC80001BB45 /* Frameworks */,
@@ -207,9 +207,9 @@
 			dependencies = (
 				02BF5D9123B38CC80001BB45 /* PBXTargetDependency */,
 			);
-			name = SwiftyMobileDeviceTests;
-			productName = SwiftyMobileDeviceTests;
-			productReference = 02BF5D8E23B38CC80001BB45 /* SwiftyMobileDeviceTests.xctest */;
+			name = SwiftiMobileDeviceTests;
+			productName = SwiftiMobileDeviceTests;
+			productReference = 02BF5D8E23B38CC80001BB45 /* SwiftiMobileDeviceTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -231,7 +231,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 02BF5D7F23B38CC80001BB45 /* Build configuration list for PBXProject "SwiftyMobileDevice" */;
+			buildConfigurationList = 02BF5D7F23B38CC80001BB45 /* Build configuration list for PBXProject "SwiftiMobileDevice" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -244,8 +244,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				02BF5D8423B38CC80001BB45 /* SwiftyMobileDevice */,
-				02BF5D8D23B38CC80001BB45 /* SwiftyMobileDeviceTests */,
+				02BF5D8423B38CC80001BB45 /* SwiftiMobileDevice */,
+				02BF5D8D23B38CC80001BB45 /* SwiftiMobileDeviceTests */,
 			);
 		};
 /* End PBXProject section */
@@ -311,7 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02BF5D9423B38CC80001BB45 /* SwiftyMobileDeviceTests.swift in Sources */,
+				02BF5D9423B38CC80001BB45 /* SwiftiMobileDeviceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +320,7 @@
 /* Begin PBXTargetDependency section */
 		02BF5D9123B38CC80001BB45 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 02BF5D8423B38CC80001BB45 /* SwiftyMobileDevice */;
+			target = 02BF5D8423B38CC80001BB45 /* SwiftiMobileDevice */;
 			targetProxy = 02BF5D9023B38CC80001BB45 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -464,7 +464,7 @@
 					"$(SRCROOT)/libimobiledevice/include",
 					"$(SRCROOT)/libplist/include",
 				);
-				INFOPLIST_FILE = SwiftyMobileDevice/Info.plist;
+				INFOPLIST_FILE = SwiftiMobileDevice/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -478,7 +478,7 @@
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftyMobileDevice;
+				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftiMobileDevice;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/$(TARGET_NAME)";
@@ -506,7 +506,7 @@
 					"$(SRCROOT)/libimobiledevice/include",
 					"$(SRCROOT)/libplist/include",
 				);
-				INFOPLIST_FILE = SwiftyMobileDevice/Info.plist;
+				INFOPLIST_FILE = SwiftiMobileDevice/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -520,7 +520,7 @@
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftyMobileDevice;
+				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftiMobileDevice;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/$(TARGET_NAME)";
@@ -534,13 +534,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = SwiftyMobileDeviceTests/Info.plist;
+				INFOPLIST_FILE = SwiftiMobileDeviceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftyMobileDeviceTests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftiMobileDeviceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -552,13 +552,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = SwiftyMobileDeviceTests/Info.plist;
+				INFOPLIST_FILE = SwiftiMobileDeviceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftyMobileDeviceTests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftiMobileDeviceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -567,7 +567,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		02BF5D7F23B38CC80001BB45 /* Build configuration list for PBXProject "SwiftyMobileDevice" */ = {
+		02BF5D7F23B38CC80001BB45 /* Build configuration list for PBXProject "SwiftiMobileDevice" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				02BF5D9723B38CC80001BB45 /* Debug */,
@@ -576,7 +576,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		02BF5D9923B38CC80001BB45 /* Build configuration list for PBXNativeTarget "SwiftyMobileDevice" */ = {
+		02BF5D9923B38CC80001BB45 /* Build configuration list for PBXNativeTarget "SwiftiMobileDevice" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				02BF5D9A23B38CC80001BB45 /* Debug */,
@@ -585,7 +585,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		02BF5D9C23B38CC80001BB45 /* Build configuration list for PBXNativeTarget "SwiftyMobileDeviceTests" */ = {
+		02BF5D9C23B38CC80001BB45 /* Build configuration list for PBXNativeTarget "SwiftiMobileDeviceTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				02BF5D9D23B38CC80001BB45 /* Debug */,
