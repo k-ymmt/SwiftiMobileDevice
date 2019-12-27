@@ -99,7 +99,6 @@ public struct MobileDevice {
         defer { idevice_device_list_free(devices) }
 
         let bufferPointer = UnsafeMutableBufferPointer<UnsafeMutablePointer<Int8>?>(start: devices, count: Int(count))
-        defer { bufferPointer.deallocate() }
         let idList = bufferPointer.compactMap { $0 }.map { String(cString: $0) }
         
         return idList
