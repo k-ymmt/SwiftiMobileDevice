@@ -56,7 +56,7 @@ public struct DeviceConnection {
             throw error
         }
         let buffer = UnsafeBufferPointer<Int8>(start: pdata, count: Int(receivedBytes))
-        defer { buffer.deallocate() }
+
         return (Data(buffer: buffer), receivedBytes)
     }
     
