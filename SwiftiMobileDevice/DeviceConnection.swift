@@ -20,14 +20,15 @@ public struct DeviceConnection {
         self.rawValue = nil
     }
     
-    public func send(data: String) throws -> UInt32 {
+    public func send(data: Data) throws -> UInt32 {
         guard let rawValue = self.rawValue else {
             throw MobileDeviceError.disconnected
         }
 
-        return try data.withCString { (p) -> UInt32 in
+        return try data.withUnsafeBytes { (pdata) -> UInt32 in
             var sentBytes: UInt32 = 0
-            let rawError = idevice_connection_send(rawValue, p, UInt32(data.utf8CString.count), &sentBytes)
+            let pdata = pdata.baseAddress?.bindMemory(to: Int8.self, capacity: data.count)
+            let rawError = idevice_connection_send(rawValue, pdata, UInt32(data.count), &sentBytes)
             if let error = MobileDeviceError(rawValue: rawError.rawValue) {
                 throw error
             }
