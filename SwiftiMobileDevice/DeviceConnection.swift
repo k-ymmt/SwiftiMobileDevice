@@ -42,7 +42,7 @@ public struct DeviceConnection {
             throw MobileDeviceError.disconnected
         }
         
-        let pdata = UnsafeMutablePointer<Int8>.allocate(capacity: 0)
+        let pdata = UnsafeMutablePointer<Int8>.allocate(capacity: Int(length))
         defer { pdata.deallocate() }
         let rawError: idevice_error_t
         var receivedBytes: UInt32 = 0
