@@ -19,6 +19,28 @@ public enum MobileDeviceError: Int32, Error {
     
     case deallocatedDevice = 100
     case disconnected = 101
+    
+    public var localizedDescription: String {
+        switch self {
+        case .invalidArgument:
+            return "invalid argument"
+        case .unknown:
+            return "unknown"
+        case .noDevice:
+            return "no device"
+        case .notEnoughData:
+            return "not enough data"
+        case .sslError:
+            return "ssl error"
+        case .timeout:
+            return "timeout"
+        case .deallocatedDevice:
+            return "deallocated device"
+        case .disconnected:
+            return "disconnected"
+        
+        }
+    }
 }
 
 class Wrapper<T> {
