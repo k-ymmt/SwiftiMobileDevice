@@ -44,12 +44,6 @@ public struct Device {
         })
     }
     
-    public mutating func connect<T>(port: UInt, body: (DeviceConnection) throws -> T) throws -> T {
-        var conn = try connect(port: port)
-        defer { conn.free() }
-        return try body(conn)
-    }
-    
     public func connect(port: UInt) throws -> DeviceConnection {
         guard let device = self.rawValue else {
             throw MobileDeviceError.deallocatedDevice
