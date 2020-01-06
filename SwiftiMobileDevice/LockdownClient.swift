@@ -170,50 +170,46 @@ public struct LockdownClient {
         guard let device = device.rawValue else {
             throw MobileDeviceError.deallocatedDevice
         }
-        
-        try UUID().uuidString.withCString { (p) in
-            let rawError: lockdownd_error_t
-            var client: lockdownd_client_t? = nil
-            if withHandshake {
-                rawError = lockdownd_client_new_with_handshake(device, &client, p)
-            } else {
-                rawError = lockdownd_client_new(device, &client, p)
-            }
-             
-            if let error = LockdownError(rawValue: rawError.rawValue) {
-                throw error
-            }
-            guard client != nil else {
-                throw LockdownError.unknown
-            }
-            self.rawValue = client
+        let uuid = UUID().uuidString
+        let rawError: lockdownd_error_t
+        var client: lockdownd_client_t? = nil
+        if withHandshake {
+            rawError = lockdownd_client_new_with_handshake(device, &client, uuid)
+        } else {
+            rawError = lockdownd_client_new(device, &client, uuid)
         }
+         
+        if let error = LockdownError(rawValue: rawError.rawValue) {
+            throw error
+        }
+        guard client != nil else {
+            throw LockdownError.unknown
+        }
+        self.rawValue = client
     }
     
     public func startService<T>(identifier: String, withEscroBag: Bool = false, body: (LockdownService) throws -> T) throws -> T {
         guard let lockdown = self.rawValue else {
             throw LockdownError.deallocated
         }
-
-        return try identifier.withCString { (p) -> T in
-            var pservice: lockdownd_service_descriptor_t? = nil
-            let lockdownError: lockdownd_error_t
-            if withEscroBag {
-                lockdownError = lockdownd_start_service_with_escrow_bag(lockdown, p, &pservice)
-            } else {
-                lockdownError = lockdownd_start_service(lockdown, p, &pservice)
-            }
-            if let error = LockdownError(rawValue: lockdownError.rawValue) {
-                throw error
-            }
-            guard let rawService = pservice else {
-                throw LockdownError.unknown
-            }
-            
-            var service = LockdownService(rawValue: rawService)
-            defer { service.free() }
-            return try body(service)
+        
+        var pservice: lockdownd_service_descriptor_t? = nil
+        let lockdownError: lockdownd_error_t
+        if withEscroBag {
+            lockdownError = lockdownd_start_service_with_escrow_bag(lockdown, identifier, &pservice)
+        } else {
+            lockdownError = lockdownd_start_service(lockdown, identifier, &pservice)
         }
+        if let error = LockdownError(rawValue: lockdownError.rawValue) {
+            throw error
+        }
+        guard let rawService = pservice else {
+            throw LockdownError.unknown
+        }
+        
+        var service = LockdownService(rawValue: rawService)
+        defer { service.free() }
+        return try body(service)
     }
     
     public func getQueryType() throws -> String {
@@ -239,20 +235,16 @@ public struct LockdownClient {
             throw LockdownError.deallocated
         }
         
-        return try domain.withCString { (domain) -> Plist in
-            try key.withCString { (key) -> Plist in
-                var pplist: plist_t? = nil
-                let rawError = lockdownd_get_value(lockdown, domain, key, &pplist)
-                if let error = LockdownError(rawValue: rawError.rawValue) {
-                    throw error
-                }
-                guard let plist = pplist else {
-                    throw LockdownError.unknown
-                }
-                
-                return Plist(rawValue: plist)
-            }
+        var pplist: plist_t? = nil
+        let rawError = lockdownd_get_value(lockdown, domain, key, &pplist)
+        if let error = LockdownError(rawValue: rawError.rawValue) {
+            throw error
         }
+        guard let plist = pplist else {
+            throw LockdownError.unknown
+        }
+        
+        return Plist(rawValue: plist)
     }
     
     public func setValue(domain: String, key:String, value: Plist) throws {
@@ -262,14 +254,10 @@ public struct LockdownClient {
         guard let value = value.rawValue else {
             throw LockdownError.unknown
         }
-        
-        try domain.withCString { (domain) in
-            try key.withCString { (key) in
-                let rawError = lockdownd_set_value(lockdown, domain, key, value)
-                if let error = LockdownError(rawValue: rawError.rawValue) {
-                    throw error
-                }
-            }
+
+        let rawError = lockdownd_set_value(lockdown, domain, key, value)
+        if let error = LockdownError(rawValue: rawError.rawValue) {
+            throw error
         }
     }
     
@@ -277,14 +265,9 @@ public struct LockdownClient {
         guard let lockdown = self.rawValue else {
             throw LockdownError.deallocated
         }
-        
-        try domain.withCString { (domain) in
-            try key.withCString { (key) in
-                let rawError = lockdownd_remove_value(lockdown, domain, key)
-                if let error = LockdownError(rawValue: rawError.rawValue) {
-                    throw error
-                }
-            }
+        let rawError = lockdownd_remove_value(lockdown, domain, key)
+        if let error = LockdownError(rawValue: rawError.rawValue) {
+            throw error
         }
     }
 

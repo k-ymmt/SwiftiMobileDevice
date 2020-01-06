@@ -25,23 +25,17 @@ public struct Device {
     var rawValue: idevice_t? = nil
     
     public init(udid: String) throws {
-        try udid.withCString { (p) in
-            var device: idevice_t? = nil
-            let rawError = idevice_new(&device, p)
-            if let error = MobileDeviceError(rawValue: rawError.rawValue) {
-                throw error
-            }
-            self.rawValue = device
+        let rawError = idevice_new(&rawValue, udid)
+        if let error = MobileDeviceError(rawValue: rawError.rawValue) {
+            throw error
         }
     }
     
     public init(udid: String, options: DeviceLookupOptions) throws {
-        try udid.withCString({ (p) in
-            let rawError = idevice_new_with_options(&rawValue, p, .init(options.rawValue))
-            if let error = MobileDeviceError(rawValue: rawError.rawValue) {
-                throw error
-            }
-        })
+        let rawError = idevice_new_with_options(&rawValue, udid, .init(options.rawValue))
+        if let error = MobileDeviceError(rawValue: rawError.rawValue) {
+            throw error
+        }
     }
     
     public func connect(port: UInt) throws -> DeviceConnection {

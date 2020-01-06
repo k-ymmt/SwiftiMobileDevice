@@ -60,6 +60,22 @@ public struct DeviceInfo {
     let connectionType: ConnectionType
 }
 
+public protocol Disposable {
+    func dispose()
+}
+
+struct Dispose: Disposable {
+    private let action: () -> Void
+    
+    init(action: @escaping () -> Void) {
+        self.action = action
+    }
+    
+    func dispose() {
+        self.action()
+    }
+}
+
 public struct MobileDevice {
     public enum EventType: UInt32 {
         case add = 1
@@ -82,7 +98,7 @@ public struct MobileDevice {
         }
     }
     
-    public static func eventSubscribe(callback: @escaping (Event) throws -> Void) throws {
+    public static func eventSubscribe(callback: @escaping (Event) throws -> Void) throws -> Disposable {
         let p = Unmanaged.passRetained(Wrapper(value: callback))
 
         let rawError = idevice_event_subscribe({ (event, userData) in
@@ -102,6 +118,10 @@ public struct MobileDevice {
 
         if let error = MobileDeviceError(rawValue: rawError.rawValue) {
             throw error
+        }
+        
+        return Dispose {
+            p.release()
         }
     }
     

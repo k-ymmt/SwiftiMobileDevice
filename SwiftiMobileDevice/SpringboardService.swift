@@ -23,20 +23,18 @@ public struct SpringboardServiceClient {
         guard let lockdown = lockdown.rawValue else {
             throw LockdownError.deallocated
         }
-        return try label.withCString { (label) -> T in
-            var pclient: sbservices_client_t? = nil
-            let rawError = sbservices_client_start_service(lockdown, &pclient, label)
-            if let error = SpringboardError(rawValue: rawError.rawValue) {
-                throw error
-            }
-            guard let client = pclient else {
-                throw SpringboardError.unknown
-            }
-            var sbclient = SpringboardServiceClient(rawValue: client)
-            let result = try body(sbclient)
-            try sbclient.free()
-            return result
+        var pclient: sbservices_client_t? = nil
+        let rawError = sbservices_client_start_service(lockdown, &pclient, label)
+        if let error = SpringboardError(rawValue: rawError.rawValue) {
+            throw error
         }
+        guard let client = pclient else {
+            throw SpringboardError.unknown
+        }
+        var sbclient = SpringboardServiceClient(rawValue: client)
+        let result = try body(sbclient)
+        try sbclient.free()
+        return result
     }
     
     private var rawValue: sbservices_client_t?
@@ -68,21 +66,19 @@ public struct SpringboardServiceClient {
         guard let rawValue = self.rawValue else {
             throw SpringboardError.deallocatedService
         }
-        return try bundleIdentifier.withCString { (bundleIdentifier) -> Data in
-            var ppng: UnsafeMutablePointer<Int8>? = nil
-            var size: UInt64 = 0
-            let rawError = sbservices_get_icon_pngdata(rawValue, bundleIdentifier, &ppng, &size)
-            if let error = SpringboardError(rawValue: rawError.rawValue) {
-                throw error
-            }
-            guard let png = ppng else {
-                throw SpringboardError.unknown
-            }
-            let buffer = UnsafeMutableBufferPointer(start: png, count: Int(size))
-            defer { buffer.deallocate() }
-            
-            return Data(buffer: buffer)
+        var ppng: UnsafeMutablePointer<Int8>? = nil
+        var size: UInt64 = 0
+        let rawError = sbservices_get_icon_pngdata(rawValue, bundleIdentifier, &ppng, &size)
+        if let error = SpringboardError(rawValue: rawError.rawValue) {
+            throw error
         }
+        guard let png = ppng else {
+            throw SpringboardError.unknown
+        }
+        let buffer = UnsafeMutableBufferPointer(start: png, count: Int(size))
+        defer { buffer.deallocate() }
+        
+        return Data(buffer: buffer)
     }
     
     public func getHomeScreenWallpaperPNGData() throws -> Data {

@@ -28,21 +28,20 @@ public struct DebugServerCommand {
     }
     
     init(name: String, arguments: [String]) throws {
-        try name.withCString { (name) in
-            let buffer = UnsafeMutableBufferPointer<UnsafeMutablePointer<Int8>?>.allocate(capacity: arguments.count + 1)
-            defer { buffer.deallocate() }
-            for (i, argument) in arguments.enumerated() {
-                buffer[i] = argument.unsafeMutablePointer()
-            }
-            buffer[arguments.count] = nil
-            let rawError = debugserver_command_new(name, Int32(arguments.count), buffer.baseAddress, &rawValue)
-            buffer.forEach { $0?.deallocate() }
-            if let error = DebugServerError(rawValue: rawError.rawValue) {
-                throw error
-            }
-            guard rawValue == nil else {
-                throw DebugServerError.unknown
-            }
+        let buffer = UnsafeMutableBufferPointer<UnsafeMutablePointer<Int8>?>.allocate(capacity: arguments.count + 1)
+        defer { buffer.deallocate() }
+        for (i, argument) in arguments.enumerated() {
+            buffer[i] = argument.unsafeMutablePointer()
+        }
+
+        buffer[arguments.count] = nil
+        let rawError = debugserver_command_new(name, Int32(arguments.count), buffer.baseAddress, &rawValue)
+        buffer.forEach { $0?.deallocate() }
+        if let error = DebugServerError(rawValue: rawError.rawValue) {
+            throw error
+        }
+        guard rawValue == nil else {
+            throw DebugServerError.unknown
         }
     }
     

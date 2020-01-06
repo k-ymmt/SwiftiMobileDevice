@@ -38,20 +38,18 @@ public struct FileRelayClient {
             throw MobileDeviceError.deallocatedDevice
         }
         
-        return try label.withCString { (label) -> T in
-            var pclient: file_relay_client_t? = nil
-            let rawError = file_relay_client_start_service(device, &pclient, label)
-            if let error = FileRelayError(rawValue: rawError.rawValue) {
-                throw error
-            }
-            guard let pointer = pclient else {
-                throw FileRelayError.unknown
-            }
-            var client = FileRelayClient(rawValue: pointer)
-            let result = try body(client)
-            try client.free()
-            return result
+        var pclient: file_relay_client_t? = nil
+        let rawError = file_relay_client_start_service(device, &pclient, label)
+        if let error = FileRelayError(rawValue: rawError.rawValue) {
+            throw error
         }
+        guard let pointer = pclient else {
+            throw FileRelayError.unknown
+        }
+        var client = FileRelayClient(rawValue: pointer)
+        let result = try body(client)
+        try client.free()
+        return result
     }
     
     var rawValue: file_relay_client_t?

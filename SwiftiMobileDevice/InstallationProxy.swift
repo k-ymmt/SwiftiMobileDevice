@@ -133,22 +133,13 @@ public struct InstallationProxyOptions {
         for argument in arguments {
             switch argument {
             case .skipUninstall(let bool):
-                argument.key.withCString { (key) in
-                    plist_dict_set_item(rawValue, key, plist_new_bool(bool ? 1 : 0))
-                }
+                plist_dict_set_item(rawValue, argument.key, plist_new_bool(bool ? 1 : 0))
             case .applicationSinf(let plist),
                  .itunesMetadata(let plist),
                  .returnAttributes(let plist):
-                argument.key.withCString { (key) in
-                    plist_dict_set_item(rawValue, key, plist_copy(plist.rawValue))
-                }
+                plist_dict_set_item(rawValue, argument.key, plist_copy(plist.rawValue))
             case .applicationType(let type):
-                argument.key.withCString { (key) in
-                    type.rawValue.withCString { (type) in
-                        plist_dict_set_item(rawValue, key, plist_new_string(type))
-                    }
-                }
-                
+                plist_dict_set_item(rawValue, argument.key, plist_new_string(type.rawValue))
             }
         }
     }
@@ -159,14 +150,10 @@ public struct InstallationProxyOptions {
         }
         let returnAttributes = plist_new_array()
         for argument in arguments {
-            argument.withCString { (p) in
-                plist_array_append_item(returnAttributes, plist_new_string(p))
-            }
+            plist_array_append_item(returnAttributes, plist_new_string(argument))
         }
         
-        "ReturnAttributes".withCString { (p) in
-            plist_dict_set_item(rawValue, p, returnAttributes)
-        }
+        plist_dict_set_item(rawValue, "ReturnAttributes", returnAttributes)
     }
     
     public mutating func free() {
@@ -180,24 +167,22 @@ public struct InstallationProxyOptions {
 
 public struct InstallationProxy {
     static func start<T>(device: Device, label: String, action: (InstallationProxy) throws -> T) throws -> T {
-        try label.withCString { (label) throws -> T in
-            guard let device = device.rawValue else {
-                throw MobileDeviceError.deallocatedDevice
-            }
-            var ipc: instproxy_client_t? = nil
-            let rawError = instproxy_client_start_service(device, &ipc, label)
-            if let error = LockdownError(rawValue: rawError.rawValue) {
-                throw error
-            }
-            guard let client = ipc else {
-                throw InstallationProxyError.unknwon
-            }
-            
-            var proxy = InstallationProxy(rawValue: client)
-            defer { proxy.free() }
-            
-            return try action(InstallationProxy(rawValue: client))
+        guard let device = device.rawValue else {
+            throw MobileDeviceError.deallocatedDevice
         }
+        var ipc: instproxy_client_t? = nil
+        let rawError = instproxy_client_start_service(device, &ipc, label)
+        if let error = LockdownError(rawValue: rawError.rawValue) {
+            throw error
+        }
+        guard let client = ipc else {
+            throw InstallationProxyError.unknwon
+        }
+        
+        var proxy = InstallationProxy(rawValue: client)
+        defer { proxy.free() }
+        
+        return try action(InstallationProxy(rawValue: client))
     }
     
     public static func commandGetName(command: Plist) -> String? {
@@ -300,7 +285,7 @@ public struct InstallationProxy {
         return Plist(rawValue: result)
     }
     
-    public func browse(options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws {
+    public func browse(options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws -> Disposable {
         guard let rawValue = self.rawValue else {
             throw InstallationProxyError.deallocatedClient
         }
@@ -317,7 +302,12 @@ public struct InstallationProxy {
             pointer.release()
         }, userData.toOpaque())
         if let error = InstallationProxyError(rawValue: rawError.rawValue) {
+            userData.release()
             throw error
+        }
+        
+        return Dispose {
+            userData.release()
         }
     }
     
@@ -328,6 +318,7 @@ public struct InstallationProxy {
         
         let buffer: UnsafeMutableBufferPointer<UnsafePointer<Int8>?>?
         defer { buffer?.deallocate() }
+        var p = appIDs?.map { $0.utf8CString }
         if let appIDs = appIDs {
             let pbuffer = UnsafeMutableBufferPointer<UnsafePointer<Int8>?>.allocate(capacity: appIDs.count + 1)
             for (i, id) in appIDs.enumerated() {
@@ -335,6 +326,7 @@ public struct InstallationProxy {
             }
             pbuffer[appIDs.count] = nil
             buffer = pbuffer
+            
         } else {
             buffer = nil
         }
@@ -352,69 +344,78 @@ public struct InstallationProxy {
         return Plist(rawValue: result)
     }
     
-    public func install(pkgPath: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws {
+    public func install(pkgPath: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws -> Disposable {
         guard let rawValue = self.rawValue else {
             throw InstallationProxyError.deallocatedClient
         }
         
         let userData = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.passRetained(Wrapper(value: callback))
-        try pkgPath.withCString { (pkgPath) -> Void in
-            let rawError = instproxy_install(rawValue, pkgPath, options.rawValue, { (command, status, userData) in
-                guard let userData = userData else {
-                    return
-                }
-                
-                let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
-                let callback = wrapper.takeUnretainedValue().value
-                callback(Plist(nillableValue: command), Plist(nillableValue: status))
-            }, userData.toOpaque())
-            if let error = InstallationProxyError(rawValue: rawError.rawValue) {
-                throw error
+        let rawError = instproxy_install(rawValue, pkgPath, options.rawValue, { (command, status, userData) in
+            guard let userData = userData else {
+                return
             }
+            
+            let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
+            let callback = wrapper.takeUnretainedValue().value
+            callback(Plist(nillableValue: command), Plist(nillableValue: status))
+        }, userData.toOpaque())
+        if let error = InstallationProxyError(rawValue: rawError.rawValue) {
+            userData.release()
+            throw error
+        }
+        
+        return Dispose {
+            userData.release()
         }
     }
     
-    public func upgrade(pkgPath: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws {
+    public func upgrade(pkgPath: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws -> Disposable {
         guard let rawValue = self.rawValue else {
             throw InstallationProxyError.deallocatedClient
         }
         
         let userData = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.passRetained(Wrapper(value: callback))
-        try pkgPath.withCString { (pkgPath) -> Void in
-            let rawError = instproxy_upgrade(rawValue, pkgPath, options.rawValue, { (command, status, userData) in
-                guard let userData = userData else {
-                    return
-                }
-                
-                let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
-                let callback = wrapper.takeUnretainedValue().value
-                callback(Plist(nillableValue: command), Plist(nillableValue: status))
-            }, userData.toOpaque())
-            if let error = InstallationProxyError(rawValue: rawError.rawValue) {
-                throw error
+        let rawError = instproxy_upgrade(rawValue, pkgPath, options.rawValue, { (command, status, userData) in
+            guard let userData = userData else {
+                return
             }
+            
+            let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
+            let callback = wrapper.takeUnretainedValue().value
+            callback(Plist(nillableValue: command), Plist(nillableValue: status))
+        }, userData.toOpaque())
+        if let error = InstallationProxyError(rawValue: rawError.rawValue) {
+            userData.release()
+            throw error
+        }
+        
+        return Dispose {
+            userData.release()
         }
     }
     
-    public func uninstall(appID: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws {
+    public func uninstall(appID: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws -> Disposable {
         guard let rawValue = self.rawValue else {
             throw InstallationProxyError.deallocatedClient
         }
         
         let userData = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.passRetained(Wrapper(value: callback))
-        try appID.withCString { (appID) -> Void in
-            let rawError = instproxy_uninstall(rawValue, appID, options.rawValue, { (command, status, userData) in
-                guard let userData = userData else {
-                    return
-                }
-                
-                let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
-                let callback = wrapper.takeUnretainedValue().value
-                callback(Plist(nillableValue: command), Plist(nillableValue: status))
-            }, userData.toOpaque())
-            if let error = InstallationProxyError(rawValue: rawError.rawValue) {
-                throw error
+        let rawError = instproxy_uninstall(rawValue, appID, options.rawValue, { (command, status, userData) in
+            guard let userData = userData else {
+                return
             }
+            
+            let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
+            let callback = wrapper.takeUnretainedValue().value
+            callback(Plist(nillableValue: command), Plist(nillableValue: status))
+        }, userData.toOpaque())
+        if let error = InstallationProxyError(rawValue: rawError.rawValue) {
+            userData.release()
+            throw error
+        }
+        
+        return Dispose {
+            userData.release()
         }
     }
     
@@ -435,69 +436,78 @@ public struct InstallationProxy {
         return Plist(rawValue: result)
     }
     
-    public func archive(appID: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws {
+    public func archive(appID: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws -> Disposable {
         guard let rawValue = self.rawValue else {
             throw InstallationProxyError.deallocatedClient
         }
         
         let userData = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.passRetained(Wrapper(value: callback))
-        try appID.withCString { (appID) -> Void in
-            let rawError = instproxy_archive(rawValue, appID, options.rawValue, { (command, status, userData) in
-                guard let userData = userData else {
-                    return
-                }
-                
-                let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
-                let callback = wrapper.takeUnretainedValue().value
-                callback(Plist(nillableValue: command), Plist(nillableValue: status))
-            }, userData.toOpaque())
-            if let error = InstallationProxyError(rawValue: rawError.rawValue) {
-                throw error
+        let rawError = instproxy_archive(rawValue, appID, options.rawValue, { (command, status, userData) in
+            guard let userData = userData else {
+                return
             }
+            
+            let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
+            let callback = wrapper.takeUnretainedValue().value
+            callback(Plist(nillableValue: command), Plist(nillableValue: status))
+        }, userData.toOpaque())
+        if let error = InstallationProxyError(rawValue: rawError.rawValue) {
+            userData.release()
+            throw error
+        }
+        
+        return Dispose {
+            userData.release()
         }
     }
     
-    public func restore(appID: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws {
+    public func restore(appID: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws -> Disposable {
         guard let rawValue = self.rawValue else {
             throw InstallationProxyError.deallocatedClient
         }
         
         let userData = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.passRetained(Wrapper(value: callback))
-        try appID.withCString { (appID) -> Void in
-            let rawError = instproxy_restore(rawValue, appID, options.rawValue, { (command, status, userData) in
-                guard let userData = userData else {
-                    return
-                }
-                
-                let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
-                let callback = wrapper.takeUnretainedValue().value
-                callback(Plist(nillableValue: command), Plist(nillableValue: status))
-            }, userData.toOpaque())
-            if let error = InstallationProxyError(rawValue: rawError.rawValue) {
-                throw error
+        let rawError = instproxy_restore(rawValue, appID, options.rawValue, { (command, status, userData) in
+            guard let userData = userData else {
+                return
             }
+            
+            let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
+            let callback = wrapper.takeUnretainedValue().value
+            callback(Plist(nillableValue: command), Plist(nillableValue: status))
+        }, userData.toOpaque())
+        if let error = InstallationProxyError(rawValue: rawError.rawValue) {
+            userData.release()
+            throw error
+        }
+        
+        return Dispose {
+            userData.release()
         }
     }
     
-    public func removeArchive(appID: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws {
+    public func removeArchive(appID: String, options: Plist, callback: @escaping (Plist?, Plist?) -> Void) throws -> Disposable {
         guard let rawValue = self.rawValue else {
             throw InstallationProxyError.deallocatedClient
         }
         
         let userData = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.passRetained(Wrapper(value: callback))
-        try appID.withCString { (appID) -> Void in
-            let rawError = instproxy_remove_archive(rawValue, appID, options.rawValue, { (command, status, userData) in
-                guard let userData = userData else {
-                    return
-                }
-                
-                let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
-                let callback = wrapper.takeUnretainedValue().value
-                callback(Plist(nillableValue: command), Plist(nillableValue: status))
-            }, userData.toOpaque())
-            if let error = InstallationProxyError(rawValue: rawError.rawValue) {
-                throw error
+        let rawError = instproxy_remove_archive(rawValue, appID, options.rawValue, { (command, status, userData) in
+            guard let userData = userData else {
+                return
             }
+            
+            let wrapper = Unmanaged<Wrapper<(Plist?, Plist?) -> Void>>.fromOpaque(userData)
+            let callback = wrapper.takeUnretainedValue().value
+            callback(Plist(nillableValue: command), Plist(nillableValue: status))
+        }, userData.toOpaque())
+        if let error = InstallationProxyError(rawValue: rawError.rawValue) {
+            userData.release()
+            throw error
+        }
+        
+        return Dispose {
+            userData.release()
         }
     }
     
@@ -530,19 +540,17 @@ public struct InstallationProxy {
         guard let rawValue = self.rawValue else {
             throw InstallationProxyError.deallocatedClient
         }
-        return try bundleIdentifier.withCString { (bundleIdentifier) throws -> String in
-            var ppath: UnsafeMutablePointer<Int8>? = nil
-            let rawError = instproxy_client_get_path_for_bundle_identifier(rawValue, bundleIdentifier, &ppath)
-            if let error = InstallationProxyError(rawValue: rawError.rawValue) {
-                throw error
-            }
-            guard let path = ppath else {
-                throw InstallationProxyError.unknwon
-            }
-            defer { path.deallocate() }
-            
-            return String(cString: path)
+        var ppath: UnsafeMutablePointer<Int8>? = nil
+        let rawError = instproxy_client_get_path_for_bundle_identifier(rawValue, bundleIdentifier, &ppath)
+        if let error = InstallationProxyError(rawValue: rawError.rawValue) {
+            throw error
         }
+        guard let path = ppath else {
+            throw InstallationProxyError.unknwon
+        }
+        defer { path.deallocate() }
+        
+        return String(cString: path)
     }
     
     public mutating func free() {

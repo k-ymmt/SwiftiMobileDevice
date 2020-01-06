@@ -27,21 +27,20 @@ public struct ScreenshotService {
         guard let device = device.rawValue else {
             throw MobileDeviceError.deallocatedDevice
         }
-        return try label.withCString { (label) -> T in
-            var pscreenshot: screenshotr_client_t? = nil
-            var screenshotError = screenshotr_client_start_service(device, &pscreenshot, label)
-            
-            if let error = ScreenshotError(rawValue: screenshotError.rawValue) {
-                throw error
-            }
-            guard let screenshot = pscreenshot else {
-                throw ScreenshotError.unknown
-            }
-            
-            var service = ScreenshotService(rawValue: screenshot)
-            defer { service.free() }
-            return try body(service)
+        
+        var pscreenshot: screenshotr_client_t? = nil
+        var screenshotError = screenshotr_client_start_service(device, &pscreenshot, label)
+        
+        if let error = ScreenshotError(rawValue: screenshotError.rawValue) {
+            throw error
         }
+        guard let screenshot = pscreenshot else {
+            throw ScreenshotError.unknown
+        }
+        
+        var service = ScreenshotService(rawValue: screenshot)
+        defer { service.free() }
+        return try body(service)
     }
     
     var rawValue: screenshotr_client_t?
