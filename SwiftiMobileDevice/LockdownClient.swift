@@ -188,7 +188,7 @@ public struct LockdownClient {
         self.rawValue = client
     }
     
-    public func startService<T>(identifier: String, withEscroBag: Bool = false, body: (LockdownService) throws -> T) throws -> T {
+    public func getService(identifier: String, withEscroBag: Bool = false) throws -> LockdownService {
         guard let lockdown = self.rawValue else {
             throw LockdownError.deallocated
         }
@@ -207,7 +207,11 @@ public struct LockdownClient {
             throw LockdownError.unknown
         }
         
-        var service = LockdownService(rawValue: rawService)
+        return LockdownService(rawValue: rawService)
+    }
+    
+    public func startService<T>(identifier: String, withEscroBag: Bool = false, body: (LockdownService) throws -> T) throws -> T {
+        var service = try getService(identifier: identifier, withEscroBag: withEscroBag)
         defer { service.free() }
         return try body(service)
     }
@@ -316,6 +320,10 @@ public struct LockdownClient {
 }
 
 public extension LockdownClient {
+    func getService(service: AppleServiceIdentifier, withEscroBag: Bool = false) throws -> LockdownService {
+        return try getService(service: service, withEscroBag: withEscroBag)
+    }
+    
     func startService<T>(service: AppleServiceIdentifier, withEscroBag: Bool = false, body: (LockdownService) throws -> T) throws -> T {
         return try startService(identifier: service.rawValue, withEscroBag: withEscroBag, body: body)
     }
