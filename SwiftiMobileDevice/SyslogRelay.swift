@@ -19,10 +19,10 @@ public enum SyslogRelayError: Int32, Error {
 }
 
 public struct SyslogReceivedData: CustomStringConvertible {
-    fileprivate(set) var message: String
-    let date: Date
-    let name: String
-    let processInfo: String
+    public fileprivate(set) var message: String
+    public let date: Date
+    public let name: String
+    public let processInfo: String
     
     public var description: String {
         return "\(dateFormatter.string(from: date)) \(name) \(processInfo) \(message)"
