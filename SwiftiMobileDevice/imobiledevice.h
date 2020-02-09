@@ -6,4 +6,5 @@
 #import <libimobiledevice/notification_proxy.h>
 #import <libimobiledevice/service.h>
 #import <libimobiledevice/file_relay.h>
+#import <libimobiledevice/syslog_relay.h>
 #import <libimobiledevice/sbservices.h>

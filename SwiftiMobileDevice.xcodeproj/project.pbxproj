@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0266FC8523B47E16005D2408 /* SwiftyLibPlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */; };
 		0266FC8623B47E16005D2408 /* SwiftyLibPlist.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		02AB5A5A23E2C4AA003844E5 /* SyslogRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB5A5923E2C4AA003844E5 /* SyslogRelay.swift */; };
 		02BF5D8F23B38CC80001BB45 /* SwiftiMobileDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5D8523B38CC80001BB45 /* SwiftiMobileDevice.framework */; };
 		02BF5D9423B38CC80001BB45 /* SwiftiMobileDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5D9323B38CC80001BB45 /* SwiftiMobileDeviceTests.swift */; };
 		02BF5D9623B38CC80001BB45 /* SwiftiMobileDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 02BF5D8823B38CC80001BB45 /* SwiftiMobileDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -54,6 +55,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02AB5A5923E2C4AA003844E5 /* SyslogRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyslogRelay.swift; sourceTree = "<group>"; };
 		02BF5D8523B38CC80001BB45 /* SwiftiMobileDevice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftiMobileDevice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		02BF5D8823B38CC80001BB45 /* SwiftiMobileDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftiMobileDevice.h; sourceTree = "<group>"; };
 		02BF5D8923B38CC80001BB45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				02BF5DAB23B391850001BB45 /* SpringboardService.swift */,
 				02BF5DAD23B391D90001BB45 /* ScreenshotService.swift */,
 				02BF5DB323B392760001BB45 /* FileRelay.swift */,
+				02AB5A5923E2C4AA003844E5 /* SyslogRelay.swift */,
 				02BF5DBB23B392ED0001BB45 /* AppleServiceIdentifier.swift */,
 				02BF5DA923B3915A0001BB45 /* String+Unsafe.swift */,
 				02BF5DA823B390E00001BB45 /* imobiledevice.h */,
@@ -295,6 +298,7 @@
 			files = (
 				02BF5DB423B392760001BB45 /* FileRelay.swift in Sources */,
 				02BF5DB623B3928E0001BB45 /* DeviceConnection.swift in Sources */,
+				02AB5A5A23E2C4AA003844E5 /* SyslogRelay.swift in Sources */,
 				02BF5DAA23B3915A0001BB45 /* String+Unsafe.swift in Sources */,
 				02BF5DBC23B392ED0001BB45 /* AppleServiceIdentifier.swift in Sources */,
 				02BF5DB823B392AE0001BB45 /* Device.swift in Sources */,

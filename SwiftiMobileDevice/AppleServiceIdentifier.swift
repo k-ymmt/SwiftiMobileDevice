@@ -14,6 +14,7 @@ public enum AppleServiceIdentifier: String {
     case debugserver = "com.apple.debugserver"
     case diagnosticsRelay = "com.apple.diagnostics_relay"
     case fileRelay = "com.apple.mobile.file_relay"
+    case syslogRelay = "com.apple.syslog_relay"
     case heartbeat = "com.apple.mobile.heartbeat"
     case houseArrest = "com.apple.mobile.house_arrest"
     case installationProxy = "com.apple.mobile.installation_proxy"
