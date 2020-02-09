@@ -128,7 +128,7 @@ public struct SyslogRelayClient {
     }
 }
 
-extension SyslogRelayClient {
+public extension SyslogRelayClient {
     func startCaptureMessage(callback: @escaping (SyslogReceivedData) -> Void) throws -> Disposable {
         var buffer: [Int8] = []
         var previousMessage: SyslogReceivedData?
