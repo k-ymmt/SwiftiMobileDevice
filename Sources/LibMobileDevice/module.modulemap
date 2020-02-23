@@ -1,0 +1,6 @@
+module LibMobileDevice {
+    umbrella header "imobiledevice.h"
+
+    export *
+    module * { export * }
+}

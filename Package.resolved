@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftyLibPlist",
+        "repositoryURL": "https://github.com/k-ymmt/SwiftyLibPlist.git",
+        "state": {
+          "branch": "spm",
+          "revision": "55c9acee889c3d874ab1638d58124acf76398573",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
