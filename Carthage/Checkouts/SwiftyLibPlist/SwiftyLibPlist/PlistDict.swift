@@ -53,9 +53,7 @@ public extension Plist {
     init(dictionary: [String: Plist]) {
         self.rawValue = plist_new_dict()
         for (key, value) in dictionary {
-            key.withCString { (key) -> Void in
-                plist_dict_set_item(rawValue, key, value.rawValue)
-            }
+            plist_dict_set_item(rawValue, key, value.rawValue)
         }
     }
 
@@ -72,21 +70,15 @@ public extension Plist {
     
     subscript(key: String) -> Plist? {
         get {
-            key.withCString { (key) -> Plist? in
-                guard let plist = plist_dict_get_item(rawValue, key) else {
-                    return nil
-                }
-                return Plist(rawValue: plist)
-            }
+            let plist = plist_dict_get_item(rawValue, key)
+            return Plist(nillableValue: plist)
         }
         
         set {
-            key.withCString { (key) -> Void in
-                guard let newRawValue = newValue?.rawValue else {
-                    return
-                }
-                plist_dict_set_item(rawValue, key, newRawValue)
+            guard let newRawValue = newValue?.rawValue else {
+                return
             }
+            plist_dict_set_item(rawValue, key, newRawValue)
         }
     }
 }

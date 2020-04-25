@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021854672454C2FE008E3E4E /* libimobiledevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 021854662454C2F5008E3E4E /* libimobiledevice.a */; };
+		021854692454C744008E3E4E /* libusbmuxd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 021854682454C739008E3E4E /* libusbmuxd.a */; };
 		0266FC8523B47E16005D2408 /* SwiftyLibPlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */; };
 		0266FC8623B47E16005D2408 /* SwiftyLibPlist.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02AB5A5A23E2C4AA003844E5 /* SyslogRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB5A5923E2C4AA003844E5 /* SyslogRelay.swift */; };
 		02BF5D8F23B38CC80001BB45 /* SwiftiMobileDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5D8523B38CC80001BB45 /* SwiftiMobileDevice.framework */; };
 		02BF5D9423B38CC80001BB45 /* SwiftiMobileDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5D9323B38CC80001BB45 /* SwiftiMobileDeviceTests.swift */; };
 		02BF5D9623B38CC80001BB45 /* SwiftiMobileDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 02BF5D8823B38CC80001BB45 /* SwiftiMobileDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		02BF5DA223B38FC20001BB45 /* libimobiledevice.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5DA123B38FC20001BB45 /* libimobiledevice.6.dylib */; };
-		02BF5DA323B38FC20001BB45 /* libimobiledevice.6.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 02BF5DA123B38FC20001BB45 /* libimobiledevice.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		02BF5DA623B3909F0001BB45 /* MobileDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5DA523B3909F0001BB45 /* MobileDevice.swift */; };
 		02BF5DAA23B3915A0001BB45 /* String+Unsafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5DA923B3915A0001BB45 /* String+Unsafe.swift */; };
 		02BF5DAC23B391850001BB45 /* SpringboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5DAB23B391850001BB45 /* SpringboardService.swift */; };
@@ -26,7 +26,6 @@
 		02BF5DB823B392AE0001BB45 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5DB723B392AE0001BB45 /* Device.swift */; };
 		02BF5DBA23B392C60001BB45 /* DebugServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5DB923B392C60001BB45 /* DebugServer.swift */; };
 		02BF5DBC23B392ED0001BB45 /* AppleServiceIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF5DBB23B392ED0001BB45 /* AppleServiceIdentifier.swift */; };
-		02BF5DC323B3B5570001BB45 /* libplist.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5DC023B3B4690001BB45 /* libplist.3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +45,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				02BF5DA323B38FC20001BB45 /* libimobiledevice.6.dylib in Embed Libraries */,
 				0266FC8623B47E16005D2408 /* SwiftyLibPlist.framework in Embed Libraries */,
 			);
 			name = "Embed Libraries";
@@ -55,6 +53,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		021854662454C2F5008E3E4E /* libimobiledevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libimobiledevice.a; path = libs/libimobiledevice.a; sourceTree = "<group>"; };
+		021854682454C739008E3E4E /* libusbmuxd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libusbmuxd.a; path = libs/libusbmuxd.a; sourceTree = "<group>"; };
 		02AB5A5923E2C4AA003844E5 /* SyslogRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyslogRelay.swift; sourceTree = "<group>"; };
 		02BF5D8523B38CC80001BB45 /* SwiftiMobileDevice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftiMobileDevice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		02BF5D8823B38CC80001BB45 /* SwiftiMobileDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftiMobileDevice.h; sourceTree = "<group>"; };
@@ -85,9 +85,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02BF5DA223B38FC20001BB45 /* libimobiledevice.6.dylib in Frameworks */,
+				021854692454C744008E3E4E /* libusbmuxd.a in Frameworks */,
 				0266FC8523B47E16005D2408 /* SwiftyLibPlist.framework in Frameworks */,
-				02BF5DC323B3B5570001BB45 /* libplist.3.dylib in Frameworks */,
+				021854672454C2FE008E3E4E /* libimobiledevice.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +156,8 @@
 		02BF5DA023B38FC20001BB45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				021854682454C739008E3E4E /* libusbmuxd.a */,
+				021854662454C2F5008E3E4E /* libimobiledevice.a */,
 				02BF5DC023B3B4690001BB45 /* libplist.3.dylib */,
 				02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */,
 				02BF5DA123B38FC20001BB45 /* libimobiledevice.6.dylib */,
@@ -287,7 +289,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nlib_path=${SRCROOT}/libimobiledevice/src/.libs\nif [ -d \"${lib_path}\" ];then\n    exit 0\nfi\n\ncd ${SRCROOT}/libimobiledevice\n./autogen.sh\nmake\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nset -ex\n\nlocal_libs=${SRCROOT}/libs\n\n[ -d ${local_libs} ] || mkdir ${local_libs}\n\nfunction make_lib() {\n    library_name=$1\n    if [ -f \"${local_libs}/${library_name}.a\" ];then\n        exit 0\n    fi\n    \n    cd ${SRCROOT}/${library_name}\n    ./autogen.sh\n    make\n\n    cp ${SRCROOT}/${library_name}/src/.libs/${library_name}.a ${local_libs}/\n\n}\n\nmake_lib \"libusbmuxd\"\nmake_lib \"libimobiledevice\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -474,14 +476,18 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
+					"@loader_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/libimobiledevice/src/.libs",
-					"$(PROJECT_DIR)/Carthage/Build/Mac/SwiftyLibPlist.framework/Versions/A/Frameworks",
+					"$(PROJECT_DIR)/libs",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-L/usr/local/opt/openssl/lib",
+					"-lssl",
+					"-lcrypto",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftiMobileDevice;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -516,14 +522,18 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
+					"@loader_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/libimobiledevice/src/.libs",
-					"$(PROJECT_DIR)/Carthage/Build/Mac/SwiftyLibPlist.framework/Versions/A/Frameworks",
+					"$(PROJECT_DIR)/libs",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-L/usr/local/opt/openssl/lib",
+					"-lssl",
+					"-lcrypto",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftiMobileDevice;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

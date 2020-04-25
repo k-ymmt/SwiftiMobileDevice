@@ -11,9 +11,7 @@ import libplist
 
 public extension Plist {
     init(string: String) {
-        self.rawValue = string.withCString({ (string) -> plist_t? in
-            plist_new_string(string)
-        })
+        self.rawValue = plist_new_string(string)
     }
     
     init(bool: Bool) {
@@ -61,9 +59,10 @@ public extension Plist {
             return String(cString: key)
         }
         set {
-            newValue?.withCString({ (key) -> Void in
-                plist_set_key_val(rawValue, key)
-            })
+            guard let key = newValue else {
+                return
+            }
+            plist_set_key_val(rawValue, key)
         }
     }
     
@@ -81,9 +80,10 @@ public extension Plist {
             return String(cString: key)
         }
         set {
-            newValue?.withCString({ (string) -> Void in
-                plist_set_string_val(rawValue, string)
-            })
+            guard let string = newValue else {
+                return
+            }
+            plist_set_string_val(rawValue, string)
         }
     }
     
@@ -138,11 +138,8 @@ public extension Plist {
             return Data(bytes: UnsafeRawPointer(value), count: Int(length))
         }
         set {
-            guard let data = newValue, let string = String(data: data, encoding: .utf8) else {
-                return
-            }
-            string.withCString { (p) -> Void in
-                plist_set_data_val(rawValue, p, UInt64(string.utf8CString.count))
+            newValue?.withUnsafeBytes { (data: UnsafeRawBufferPointer) -> Void in
+                plist_set_data_val(rawValue, data.bindMemory(to: Int8.self).baseAddress, UInt64(data.count))
             }
         }
     }

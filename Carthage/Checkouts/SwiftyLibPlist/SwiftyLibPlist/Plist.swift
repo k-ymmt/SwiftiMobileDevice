@@ -72,7 +72,7 @@ public struct Plist {
     }
 
     public init?(nillableValue: plist_t?) {
-        guard let rawValue = rawValue else {
+        guard let rawValue = nillableValue else {
             return nil
         }
         self.rawValue = rawValue
@@ -149,11 +149,8 @@ extension Plist: Equatable {
 public extension Plist {
     init?(xml: String) {
         let length = xml.utf8CString.count
-        let prawValue = xml.withCString { (xml) -> plist_t? in
-            var plist: plist_t? = nil
-            plist_from_xml(xml, UInt32(length), &plist)
-            return plist
-        }
+        var prawValue: plist_t? = nil
+        plist_from_xml(xml, UInt32(length), &prawValue)
         guard let rawValue = prawValue else {
             return nil
         }
@@ -179,12 +176,8 @@ public extension Plist {
     
     init?(memory: String) {
         let length = memory.utf8CString.count
-        let prawValue = memory.withCString { (memory) -> plist_t? in
-            var plist: plist_t? = nil
-            plist_from_memory(memory, UInt32(length), &plist)
-            
-            return plist
-        }
+        var prawValue: plist_t? = nil
+        plist_from_memory(memory, UInt32(length), &prawValue)
         guard let rawValue = prawValue else {
             return nil
         }
@@ -192,11 +185,7 @@ public extension Plist {
     }
     
     static func isBinary(data: String) -> Bool {
-        let length = data.utf8CString.count
-        return data.withCString { (data) -> Bool in
-            let result = plist_is_binary(data, UInt32(length))
-            return result > 0
-        }
+        plist_is_binary(data, UInt32(data.utf8CString.count)) > 0
     }
 }
 

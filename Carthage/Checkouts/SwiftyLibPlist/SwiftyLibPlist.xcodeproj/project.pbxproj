@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021854652454C029008E3E4E /* libplist.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 021854642454C01C008E3E4E /* libplist.a */; };
 		0266FC3723B3399A005D2408 /* SwiftyLibPlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0266FC2D23B3399A005D2408 /* SwiftyLibPlist.framework */; };
 		0266FC3C23B3399A005D2408 /* SwiftyLibPlistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266FC3B23B3399A005D2408 /* SwiftyLibPlistTests.swift */; };
 		0266FC3E23B3399A005D2408 /* SwiftyLibPlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 0266FC3023B3399A005D2408 /* SwiftyLibPlist.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0266FC4923B33C0C005D2408 /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266FC4823B33C0C005D2408 /* Plist.swift */; };
-		0266FC5323B341C2005D2408 /* libplist.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0266FC5223B341C2005D2408 /* libplist.3.dylib */; };
-		0266FC5423B341C2005D2408 /* libplist.3.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 0266FC5223B341C2005D2408 /* libplist.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		0266FC5823B351BC005D2408 /* PlistArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266FC5723B351BC005D2408 /* PlistArray.swift */; };
 		0266FC5A23B35216005D2408 /* PlistValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266FC5923B35216005D2408 /* PlistValue.swift */; };
 		0266FC5C23B35242005D2408 /* PlistDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266FC5B23B35242005D2408 /* PlistDict.swift */; };
@@ -29,21 +28,8 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		0266FC5523B341C2005D2408 /* Embed Libraries */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				0266FC5423B341C2005D2408 /* libplist.3.dylib in Embed Libraries */,
-			);
-			name = "Embed Libraries";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		021854642454C01C008E3E4E /* libplist.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libplist.a; path = libs/libplist.a; sourceTree = "<group>"; };
 		0266FC2D23B3399A005D2408 /* SwiftyLibPlist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyLibPlist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0266FC3023B3399A005D2408 /* SwiftyLibPlist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyLibPlist.h; sourceTree = "<group>"; };
 		0266FC3123B3399A005D2408 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -53,7 +39,6 @@
 		0266FC4723B33A43005D2408 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		0266FC4823B33C0C005D2408 /* Plist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plist.swift; sourceTree = "<group>"; };
 		0266FC4C23B33EBD005D2408 /* libplist.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libplist.a; path = libplist/src/.libs/libplist.a; sourceTree = "<group>"; };
-		0266FC5223B341C2005D2408 /* libplist.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libplist.3.dylib; path = libplist/src/.libs/libplist.3.dylib; sourceTree = "<group>"; };
 		0266FC5723B351BC005D2408 /* PlistArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistArray.swift; sourceTree = "<group>"; };
 		0266FC5923B35216005D2408 /* PlistValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistValue.swift; sourceTree = "<group>"; };
 		0266FC5B23B35242005D2408 /* PlistDict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistDict.swift; sourceTree = "<group>"; };
@@ -65,7 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0266FC5323B341C2005D2408 /* libplist.3.dylib in Frameworks */,
+				021854652454C029008E3E4E /* libplist.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,7 +111,7 @@
 		0266FC4B23B33EBD005D2408 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0266FC5223B341C2005D2408 /* libplist.3.dylib */,
+				021854642454C01C008E3E4E /* libplist.a */,
 				0266FC4C23B33EBD005D2408 /* libplist.a */,
 			);
 			name = Frameworks;
@@ -156,7 +141,6 @@
 				0266FC2923B3399A005D2408 /* Sources */,
 				0266FC2A23B3399A005D2408 /* Frameworks */,
 				0266FC2B23B3399A005D2408 /* Resources */,
-				0266FC5523B341C2005D2408 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -257,7 +241,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -ex\n\nlib_path=${SRCROOT}/libplist/src/.libs\n\nif [ -d \"${lib_path}\" ];then\n    exit 0\nfi\n\ngit submodule update --remote --init\ncd ${SRCROOT}/libplist\n./autogen.sh\nmake\n\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -ex\n\nlocal_libs=${SRCROOT}/libs\nlibplist_path=${SRCROOT}/libplist\n\nif [ -f \"${local_libs}/libplist.a\" ];then\n    exit 0\nfi\n\ncd ${libplist_path}\n./autogen.sh\nmake\n\n[ -d ${local_libs} ] || mkdir ${local_libs}\n\ncp ${libplist_path}/src/.libs/libplist.a ${local_libs}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -432,9 +416,9 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/libplist/src/.libs",
+					"$(PROJECT_DIR)/libs",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftyLibPlist;
+				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftyLibPlists;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/$(TARGET_NAME)";
@@ -464,9 +448,9 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/libplist/src/.libs",
+					"$(PROJECT_DIR)/libs",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftyLibPlist;
+				PRODUCT_BUNDLE_IDENTIFIER = net.kymmt.SwiftyLibPlists;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/$(TARGET_NAME)";
