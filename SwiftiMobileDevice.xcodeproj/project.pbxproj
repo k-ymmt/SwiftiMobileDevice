@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		021854672454C2FE008E3E4E /* libimobiledevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 021854662454C2F5008E3E4E /* libimobiledevice.a */; };
 		021854692454C744008E3E4E /* libusbmuxd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 021854682454C739008E3E4E /* libusbmuxd.a */; };
+		02200C3B246F09BD001D00AE /* imobiledevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 02BF5DA823B390E00001BB45 /* imobiledevice.h */; };
 		0266FC8523B47E16005D2408 /* SwiftyLibPlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */; };
 		0266FC8623B47E16005D2408 /* SwiftyLibPlist.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 02BF5DBD23B39F440001BB45 /* SwiftyLibPlist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02AB5A5A23E2C4AA003844E5 /* SyslogRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB5A5923E2C4AA003844E5 /* SyslogRelay.swift */; };
@@ -172,6 +173,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02200C3B246F09BD001D00AE /* imobiledevice.h in Headers */,
 				02BF5D9623B38CC80001BB45 /* SwiftiMobileDevice.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -466,10 +468,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/libimobiledevice/include",
-					"$(SRCROOT)/libplist/include",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/libimobiledevice/include";
 				INFOPLIST_FILE = SwiftiMobileDevice/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -512,10 +511,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/libimobiledevice/include",
-					"$(SRCROOT)/libplist/include",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/libimobiledevice/include";
 				INFOPLIST_FILE = SwiftiMobileDevice/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
