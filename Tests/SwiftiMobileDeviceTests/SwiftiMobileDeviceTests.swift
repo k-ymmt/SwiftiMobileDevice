@@ -9,7 +9,7 @@
 import XCTest
 @testable import SwiftiMobileDevice
 
-private let udid = "37f376e36584638795be6be05d0b6e2d19569952"
+private let udid = "test"
 private let port: UInt = 8555
 
 class SwiftiMobileDeviceTests: XCTestCase {
@@ -23,14 +23,14 @@ class SwiftiMobileDeviceTests: XCTestCase {
     }
     
     func testFoo() throws {
-        let device = try Device(udid: "37f376e36584638795be6be05d0b6e2d19569952")
+        let device = try Device(udid: "test")
         let lockdown =
             try LockdownClient(device: device, withHandshake: true)
         
         try lockdown.startService(service: .syslogRelay, withEscroBag: false) { (service) throws -> Void in
             let client = try SyslogRelayClient(device: device, service: service)
 
-            try client.startCaptureMessage(callback: { (data) in
+            _ = try client.startCaptureMessage(callback: { (data) in
                 print("hoge")
                 print(data)
             })
