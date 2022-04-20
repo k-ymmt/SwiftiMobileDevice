@@ -154,7 +154,7 @@ public struct LockdownService {
         self.rawValue = rawValue
     }
     
-    mutating func free() {
+    public mutating func free() {
         guard let rawValue = self.rawValue else {
             return
         }

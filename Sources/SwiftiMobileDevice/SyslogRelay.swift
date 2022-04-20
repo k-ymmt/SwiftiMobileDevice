@@ -116,14 +116,11 @@ public struct SyslogRelayClient {
         return String(cString: data)
     }
     
-    public mutating func free() throws {
+    public mutating func free() {
         guard let rawValue = self.rawValue else {
             return
         }
-        let rawError = syslog_relay_client_free(rawValue)
-        if let error = SyslogRelayError(rawValue: rawError.rawValue) {
-            throw error
-        }
+        syslog_relay_client_free(rawValue)
         self.rawValue = nil
     }
 }
