@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import LibMobileDevice
+import CMobileDevice
 
 public enum SpringboardError: Int32, Error {
     case invalidArgument = -1

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import LibMobileDevice
+import CMobileDevice
 
 public struct DeviceConnection {
     var rawValue: idevice_connection_t?

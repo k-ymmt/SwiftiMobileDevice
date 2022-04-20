@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import LibMobileDevice
+import CMobileDevice
 
 public enum MobileDeviceError: Int32, Error {
     case invalidArgument = -1

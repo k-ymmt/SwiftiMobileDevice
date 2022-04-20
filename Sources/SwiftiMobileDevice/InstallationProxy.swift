@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import LibMobileDevice
+import CMobileDevice
 import SwiftyLibPlist
 
 public enum InstallationProxyError: Int32, Error {

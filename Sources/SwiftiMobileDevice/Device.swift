@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import LibMobileDevice
+import CMobileDevice
 
 public struct DeviceLookupOptions: OptionSet {
     public static let usbmux = DeviceLookupOptions(rawValue: 1 << 1)

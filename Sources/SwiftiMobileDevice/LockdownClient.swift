@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import LibMobileDevice
+import CMobileDevice
 import SwiftyLibPlist
 
 public enum LockdownError: Error {
@@ -321,7 +321,7 @@ public struct LockdownClient {
 
 public extension LockdownClient {
     func getService(service: AppleServiceIdentifier, withEscroBag: Bool = false) throws -> LockdownService {
-        return try getService(service: service, withEscroBag: withEscroBag)
+        return try getService(identifier: service.rawValue, withEscroBag: withEscroBag)
     }
     
     func startService<T>(service: AppleServiceIdentifier, withEscroBag: Bool = false, body: (LockdownService) throws -> T) throws -> T {

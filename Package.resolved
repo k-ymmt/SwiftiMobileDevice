@@ -5,8 +5,8 @@
         "package": "SwiftyLibPlist",
         "repositoryURL": "https://github.com/k-ymmt/SwiftyLibPlist.git",
         "state": {
-          "branch": "spm",
-          "revision": "55c9acee889c3d874ab1638d58124acf76398573",
+          "branch": "main",
+          "revision": "3d4117472c2d5b82cb7a16e28e2de1aacd5915c7",
           "version": null
         }
       }

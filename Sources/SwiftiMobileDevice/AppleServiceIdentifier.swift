@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import LibMobileDevice
 
 public enum AppleServiceIdentifier: String {
     case afc = "com.apple.afc"
