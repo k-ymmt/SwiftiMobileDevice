@@ -97,7 +97,7 @@ public struct MobileDevice {
             idevice_set_debug_level(debug ? 1 : 0)
         }
     }
-    
+
     public static func eventSubscribe(callback: @escaping (Event) throws -> Void) throws -> Disposable {
         let p = Unmanaged.passRetained(Wrapper(value: callback))
 
@@ -172,5 +172,39 @@ public struct MobileDevice {
         }
         
         return list
+    }
+}
+
+public extension MobileDevice {
+    @available(macOS 10.15, *)
+    static func subscribe() async throws -> AsyncThrowingStream<Event, Error> {
+        typealias Continuation = AsyncThrowingStream<MobileDevice.Event, Error>.Continuation
+        return AsyncThrowingStream { continuation in
+            let p = Unmanaged.passRetained(Wrapper(value: continuation))
+
+            let rawError = idevice_event_subscribe({ (event, userData) in
+                guard let userData = userData,
+                      let rawEvent = event else {
+                    return
+                }
+
+                let continuation = Unmanaged<Wrapper<Continuation>>.fromOpaque(userData).takeUnretainedValue().value
+                let event = Event(
+                    type: EventType(rawValue: rawEvent.pointee.event.rawValue),
+                    udid: String(cString: rawEvent.pointee.udid),
+                    connectionType: ConnectionType(rawValue: rawEvent.pointee.conn_type.rawValue)
+                )
+                continuation.yield(event)
+            }, p.toOpaque())
+
+            if let error = MobileDeviceError(rawValue: rawError.rawValue) {
+                p.release()
+                continuation.finish(throwing: error)
+            }
+
+            continuation.onTermination = { @Sendable _ in
+                p.release()
+            }
+        }
     }
 }
