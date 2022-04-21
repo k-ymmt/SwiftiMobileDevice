@@ -177,7 +177,7 @@ public struct MobileDevice {
 
 public extension MobileDevice {
     @available(macOS 10.15, *)
-    static func subscribe() async throws -> AsyncThrowingStream<Event, Error> {
+    static func subscribe() -> AsyncThrowingStream<Event, Error> {
         typealias Continuation = AsyncThrowingStream<MobileDevice.Event, Error>.Continuation
         return AsyncThrowingStream { continuation in
             let p = Unmanaged.passRetained(Wrapper(value: continuation))
