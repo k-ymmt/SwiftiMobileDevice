@@ -166,7 +166,7 @@ public struct InstallationProxyOptions {
 }
 
 public struct InstallationProxy {
-    static func start<T>(device: Device, label: String, action: (InstallationProxy) throws -> T) throws -> T {
+    public static func start<T>(device: Device, label: String, action: (InstallationProxy) throws -> T) throws -> T {
         guard let device = device.rawValue else {
             throw MobileDeviceError.deallocatedDevice
         }
@@ -184,7 +184,7 @@ public struct InstallationProxy {
         
         return try action(InstallationProxy(rawValue: client))
     }
-    
+
     public static func commandGetName(command: Plist) -> String? {
         var pname: UnsafeMutablePointer<Int8>? = nil
         instproxy_command_get_name(command.rawValue, &pname)
@@ -248,7 +248,7 @@ public struct InstallationProxy {
         self.rawValue = rawValue
     }
     
-    init(device: Device, service: LockdownService) throws {
+    public init(device: Device, service: LockdownService) throws {
         guard let device = device.rawValue else {
             throw MobileDeviceError.deallocatedDevice
         }
@@ -268,13 +268,13 @@ public struct InstallationProxy {
         self.rawValue = client
     }
     
-    public func browse(options: Plist) throws -> Plist {
+    public func browse(options: Plist?) throws -> Plist {
         guard let rawValue = self.rawValue else {
             throw InstallationProxyError.deallocatedClient
         }
         
         var presult: plist_t? = nil
-        let rawError = instproxy_browse(rawValue, options.rawValue, &presult)
+        let rawError = instproxy_browse(rawValue, options?.rawValue, &presult)
         if let error = InstallationProxyError(rawValue: rawError.rawValue) {
             throw error
         }
