@@ -166,7 +166,7 @@ public struct InstallationProxyOptions {
 }
 
 public struct InstallationProxy {
-    public static func start<T>(device: Device, label: String, action: (InstallationProxy) throws -> T) throws -> T {
+    public static func start<T>(device: Device, label: String?, action: (InstallationProxy) throws -> T) throws -> T {
         guard let device = device.rawValue else {
             throw MobileDeviceError.deallocatedDevice
         }
