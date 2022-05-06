@@ -19,7 +19,7 @@ public enum SpringboardError: Int32, Error {
 }
 
 public struct SpringboardServiceClient {
-    static func startService<T>(lockdown: LockdownClient, label: String, body: (SpringboardServiceClient) throws -> T) throws -> T {
+    public static func startService<T>(lockdown: LockdownClient, label: String, body: (SpringboardServiceClient) throws -> T) throws -> T {
         guard let lockdown = lockdown.rawValue else {
             throw LockdownError.deallocated
         }
@@ -43,7 +43,7 @@ public struct SpringboardServiceClient {
         self.rawValue = rawValue
     }
 
-    init(device: Device, service: LockdownService) throws {
+    public init(device: Device, service: LockdownService) throws {
         guard let device = device.rawValue else {
             throw MobileDeviceError.deallocatedDevice
         }
