@@ -18,25 +18,7 @@ public enum SpringboardError: Int32, Error {
     case deallocatedService = 100
 }
 
-public struct SpringboardServiceClient {
-    public static func startService<T>(lockdown: LockdownClient, label: String, body: (SpringboardServiceClient) throws -> T) throws -> T {
-        guard let lockdown = lockdown.rawValue else {
-            throw LockdownError.deallocated
-        }
-        var pclient: sbservices_client_t? = nil
-        let rawError = sbservices_client_start_service(lockdown, &pclient, label)
-        if let error = SpringboardError(rawValue: rawError.rawValue) {
-            throw error
-        }
-        guard let client = pclient else {
-            throw SpringboardError.unknown
-        }
-        var sbclient = SpringboardServiceClient(rawValue: client)
-        let result = try body(sbclient)
-        try sbclient.free()
-        return result
-    }
-    
+public struct SpringboardService {
     private var rawValue: sbservices_client_t?
     
     init(rawValue: sbservices_client_t) {
@@ -111,5 +93,25 @@ public struct SpringboardServiceClient {
             throw error
         }
         self.rawValue = nil
+    }
+}
+
+public extension SpringboardService {
+    static func start<T>(device: Device, label: String?, body: (SpringboardService) throws -> T) throws -> T {
+        guard let device = device.rawValue else {
+            throw MobileDeviceError.deallocatedDevice
+        }
+        var pclient: sbservices_client_t? = nil
+        let rawError = sbservices_client_start_service(device, &pclient, label)
+        if let error = SpringboardError(rawValue: rawError.rawValue) {
+            throw error
+        }
+        guard let client = pclient else {
+            throw SpringboardError.unknown
+        }
+        var sbclient = SpringboardService(rawValue: client)
+        let result = try body(sbclient)
+        try sbclient.free()
+        return result
     }
 }
